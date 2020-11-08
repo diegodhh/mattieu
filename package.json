@@ -1,6 +1,6 @@
 {
   "name": "tinder-bot",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "es un bot de tinder para hacer spam",
   "main": "index.js",
   "author": "diego",
