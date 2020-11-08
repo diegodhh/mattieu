@@ -6,11 +6,13 @@
   "author": "diego",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon ./dist-bots/index.js",
+    "dev": "nodemon ./dist-bots/index.js",
+    "start": "node ./dist-bots/index.js",
+    "build": "babel ./bots --out-dir dist-bots",
     "server": "node ./dist-bots/index.js",
     "transpile": "babel --watch ./bots --out-dir dist-bots",
     "clean": "rimraf dist-bot",
-    "watch": "concurrently \"yarn transpile\" \"yarn start\""
+    "watch": "concurrently \"yarn transpile\" \"yarn dev\""
   },
   "dependencies": {
     "@babel/cli": "^7.12.1",

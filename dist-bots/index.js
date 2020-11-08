@@ -16,6 +16,7 @@ var _require = require('tinder-client'),
     createClientFromFacebookLogin = _require.createClientFromFacebookLogin;
 
 var relaseLoverInterval = 1000 * 60 * 3;
+console.log('profile');
 
 function init() {
   return _init.apply(this, arguments);
@@ -33,40 +34,47 @@ function _init() {
               relaseLoverInterval = 1000 * 60 * 15;
               console.log('longTime', relaseLoverInterval);
             }, 60 * 1000 * 10);
-            console.log(_config["default"]);
-            _context.next = 5;
+            _context.next = 4;
             return createClientFromFacebookLogin({
               emailAddress: _config["default"].facebookUser.email,
               password: _config["default"].facebookUser.password
             });
 
-          case 5:
+          case 4:
             client = _context.sent;
+            _context.next = 7;
+            return client.changeLocation({
+              latitude: _config["default"].ubication.latitude,
+              longitude: _config["default"].ubication.longitude
+            });
+
+          case 7:
             seeker = new _SeekerBot["default"](client);
             seeker.run();
-            _context.next = 10;
+            _context.next = 11;
             return client.getProfile();
 
-          case 10:
+          case 11:
             profile = _context.sent;
+            console.log(profile);
             releaseLovers(client, profile);
-            _context.next = 18;
+            _context.next = 20;
             break;
 
-          case 14:
-            _context.prev = 14;
+          case 16:
+            _context.prev = 16;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
             setInterval(function () {
               init();
             }, 60 * 1000 * 10);
 
-          case 18:
+          case 20:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 14]]);
+    }, _callee, null, [[0, 16]]);
   }));
   return _init.apply(this, arguments);
 }

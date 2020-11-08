@@ -6,6 +6,10 @@ import config from './config/config';
 import Seeker from './SeekerBot'
 import Lover from './LoverBot'
 let relaseLoverInterval= 1000*60*3
+
+console.log('profile')
+
+
 async function init() {
     
     try{
@@ -14,15 +18,17 @@ async function init() {
         relaseLoverInterval=1000*60*15
         console.log('longTime',relaseLoverInterval)
     }, 60*1000*10);
-    console.log(config)
+
     const client = await createClientFromFacebookLogin({
             emailAddress: config.facebookUser.email,
             password: config.facebookUser.password,
           });
+        await client.changeLocation({ latitude: config.ubication.latitude, longitude:  config.ubication.longitude });
         const seeker = new Seeker(client)
-        
+     
         seeker.run()
         const profile = await client.getProfile();
+        console.log(profile)
         releaseLovers(client, profile)  
         
          

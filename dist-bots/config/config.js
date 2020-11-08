@@ -12,7 +12,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // require and configure dotenv, will load vars in .env in PROCESS.ENV
 _dotenv["default"].config();
 
-console.log(process.env);
 var config = {
   env: process.env.NODE_ENV,
   port: process.env.PORT,
@@ -20,6 +19,10 @@ var config = {
     email: process.env.FACEBOOK_EMAIL,
     number: process.env.FACEBOOK_NUMBER,
     password: process.env.FACEBOOK_PASSWORD
+  },
+  ubication: {
+    latitude: process.env.UBICATION_LATITUD,
+    longitude: process.env.UBICATION_LONGITUDE
   }
 };
 var _default = config;
