@@ -4,7 +4,7 @@ const conversationalTemplates = {
     genericResponds: ['Estoy de acuerdo con todo eso, pero quiero saber mas detalles', 'Gran respuesta!!! algo que agregar?','Gran respuesta!!!, tenes mucha sabiduria',,'Mejor pajaro en mano, siempre digo, pensas que no entdes? o sera que mi screep derobot es una garcha'],
     interestingFacts: ['Sabias que hay un avispon en estados unidos que esta matando gente?'],
     closeSell: ['Bueno quiero confesarte que realmente soy un robot seductor mi creador se llama Diego y es el de las fotos, lo queres conocer?'],
-    doubleCloseSell: ['te puedo pasar su instagram, pero es exactamente su plan maquiavelico'],
+    doubleCloseSell: ['te puedo pasar su instagram, pero es exactamente su plan maquiavelico', 'Si vos queres puedo pasarte su instagram, pero ese es su sofistcado plan malefico de robtos'],
     cool: ['diegoerrero sin la h es su instagram, hace videos tan estupidos como la idea de programar su propio robot para promocionarlos','diegoerrero sin la h es su instagram', 'diegoerrero sin la h es su instagram, te advierto que sus videos generaran daños mentales: o sea que clase de persona crea un robot seductor para que la gente vaya a su ig?']
     
     //  confess: ['Toma en cuenta que soy un robot, y no entiendo lo que decis solo hablo ignorando a mi comenzal, como un adulto mayor' ],
