@@ -1,0 +1,27 @@
+{
+  "name": "tinder-bot",
+  "version": "0.1",
+  "description": "es un bot de tinder para hacer spam",
+  "main": "index.js",
+  "author": "diego",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./dist-bots/index.js",
+    "server": "node ./dist-bots/index.js",
+    "transpile": "babel --watch ./bots --out-dir dist-bots",
+    "clean": "rimraf dist-bot",
+    "watch": "concurrently \"yarn transpile\" \"yarn start\""
+  },
+  "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6",
+    "rimraf": "^3.0.2",
+    "tinder-client": "^4.1.3",
+    "yarn-run-all": "^3.1.1"
+  }
+}
