@@ -1,4 +1,4 @@
-import conversationalTemplates from './conversationalTempates'
+import conversationalTemplates from './conversationalTemplates'
 class Lover {
     constructor(client,match, profile) {
      this.client=client
@@ -6,7 +6,7 @@ class Lover {
      this.profile=profile
      this.waitTime= 1000*60
      this.checkResponseNumber=10
-    
+      
     
     }
 
