@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _conversationalTempates = _interopRequireDefault(require("./conversationalTempates"));
+var _conversationalTemplates = _interopRequireDefault(require("./conversationalTemplates"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -33,17 +33,17 @@ var Lover = function Lover(client, match, profile) {
             _ref2 = _this.match || {}, messages = _ref2.messages, createdDate = _ref2.created_date;
             currentStep = null;
             messages && messages.reverse().find(function (msg) {
-              currentStep = Object.keys(_conversationalTempates["default"]).find(function (step) {
+              currentStep = Object.keys(_conversationalTemplates["default"]).find(function (step) {
                 // console.log(conversationalTemplates[step])
                 // console.log(msg.message)
-                var result = _conversationalTempates["default"][step].indexOf(msg.message) !== -1; // console.log(result)
+                var result = _conversationalTemplates["default"][step].indexOf(msg.message) !== -1; // console.log(result)
 
                 return result;
               }); //  console.log(currentStep)
 
               return currentStep;
             });
-            allSteps = Object.keys(_conversationalTempates["default"]); // console.log('currentStep', currentStep)
+            allSteps = Object.keys(_conversationalTemplates["default"]); // console.log('currentStep', currentStep)
             // console.log('index calcul',allSteps.indexOf(currentStep))
 
             nextStep = allSteps[allSteps.indexOf(currentStep) + 1]; // console.log('nextStep', nextStep)
@@ -58,7 +58,7 @@ var Lover = function Lover(client, match, profile) {
 
           case 8:
             // console.log('ready')
-            templates = _conversationalTempates["default"][nextStep];
+            templates = _conversationalTemplates["default"][nextStep];
 
             if (templates) {
               _context2.next = 11;
