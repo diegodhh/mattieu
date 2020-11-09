@@ -19,6 +19,8 @@ var relaseLoverInterval = 1000 * 60 * 3;
 var sleep = false;
 var sleepInterval = 60 * 1000 * 60 * 1 * 5;
 console.log('profile');
+var profileLog;
+var LastMessage = 'none';
 
 function init() {
   return _init.apply(this, arguments);
@@ -37,7 +39,6 @@ function _init() {
               console.log('longTime', relaseLoverInterval);
             }, 60 * 1000 * 10);
             setInterval(function () {
-              relaseLoverInterval = 1000 * 60 * 15;
               sleep = !sleep;
               console.log('sleep:', sleep);
             }, sleepInterval);
@@ -62,37 +63,55 @@ function _init() {
             });
 
           case 9:
-            seeker = new _SeekerBot["default"](client);
+            seeker = new _SeekerBot["default"](client, {
+              tinderGold: _config["default"].tinderGold
+            });
             seeker.run();
             _context.next = 13;
             return client.getProfile();
 
           case 13:
             profile = _context.sent;
+            profileLog = profile;
             console.log(profile);
-            releaseLovers(client, profile);
-            _context.next = 22;
+            releaseLovers(client, profile && profile.name);
+            _context.next = 23;
             break;
 
-          case 18:
-            _context.prev = 18;
+          case 19:
+            _context.prev = 19;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
             setTimeout(function () {
               init();
             }, 60 * 1000 * 120);
 
-          case 22:
+          case 23:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 18]]);
+    }, _callee, null, [[0, 19]]);
   }));
   return _init.apply(this, arguments);
 }
 
 init();
+
+var express = require('express');
+
+var app = express();
+var port = _config["default"].port || 3000;
+app.get('/', function (req, res) {
+  if (profileLog) {
+    res.send("".concat(LastMessage, " ").concat(profileLog.name, " ").concat(profileLog.pos_info.timezone));
+  } else {
+    res.send('no profile');
+  }
+});
+app.listen(port, function () {
+  console.log("Example app listening at http://localhost:".concat(port));
+});
 
 function randomInt(min, max) {
   return min + Math.floor((max - min) * Math.random());
@@ -136,6 +155,7 @@ function _releaseLovers() {
 
                           if (lover.run()) {
                             relaseLoverInterval = 1000 * 60 * 1.5;
+                            LastMessage = new Date();
                           }
 
                           return _context2.abrupt("return", lover);

@@ -9,8 +9,8 @@ let relaseLoverInterval= 1000*60*3
 let sleep = false
 const sleepInterval=60*1000*60*1*5
 console.log('profile')
-
-
+let profileLog
+let LastMessage='none'
 async function init() {
     
     try{
@@ -21,11 +21,11 @@ async function init() {
     }, 60*1000*10);
 
     setInterval(() => {
-        relaseLoverInterval=1000*60*15
+       
         sleep=!sleep
         console.log('sleep:', sleep)
     }, sleepInterval);
-
+  
     const client = await createClientFromFacebookLogin({
             emailAddress: config.facebookUser.email,
             password: config.facebookUser.password,
@@ -34,12 +34,13 @@ async function init() {
             await client.changeLocation({ latitude: config.ubication.latitude, longitude:  config.ubication.longitude });
        
           }
-          const seeker = new Seeker(client)
+          const seeker = new Seeker(client, {tinderGold:config.tinderGold})
      
         seeker.run()
         const profile = await client.getProfile();
+        profileLog=profile
         console.log(profile)
-        releaseLovers(client, profile)  
+        releaseLovers(client, profile && profile.name)  
         
          
     } catch(err){
@@ -52,6 +53,24 @@ async function init() {
 }
 
 init()
+
+
+const express = require('express')
+const app = express()
+const port = config.port || 3000 
+
+app.get('/', (req, res) => {
+    if (profileLog) {
+        res.send(`${LastMessage} ${profileLog.name} ${profileLog.pos_info.timezone}`)
+    } else {
+        res.send('no profile')
+    }
+
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
 
 
 function randomInt(min, max) {
@@ -74,8 +93,9 @@ async function releaseLovers(client, profile) {
          
             if(lover.run()) {
                 relaseLoverInterval=1000*60*1.5
+                LastMessage=new Date()
             }
-         
+        
          
           return lover
         })
