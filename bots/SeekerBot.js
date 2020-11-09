@@ -2,7 +2,7 @@
 class Seeker {
     constructor(client) {
      this.client=client
-     this.nextTry= 60*1000*60*3
+     this.nextTry= 60*1000*60*1
     }
 
     run = async () => {

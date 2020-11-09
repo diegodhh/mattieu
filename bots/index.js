@@ -6,7 +6,8 @@ import config from './config/config';
 import Seeker from './SeekerBot'
 import Lover from './LoverBot'
 let relaseLoverInterval= 1000*60*3
-
+let sleep = false
+const sleepInterval=60*1000*60*1*5
 console.log('profile')
 
 
@@ -19,12 +20,21 @@ async function init() {
         console.log('longTime',relaseLoverInterval)
     }, 60*1000*10);
 
+    setInterval(() => {
+        relaseLoverInterval=1000*60*15
+        sleep=!sleep
+        console.log('sleep:', sleep)
+    }, sleepInterval);
+
     const client = await createClientFromFacebookLogin({
             emailAddress: config.facebookUser.email,
             password: config.facebookUser.password,
           });
-        await client.changeLocation({ latitude: config.ubication.latitude, longitude:  config.ubication.longitude });
-        const seeker = new Seeker(client)
+          if (config.ubication.latitude) {
+            await client.changeLocation({ latitude: config.ubication.latitude, longitude:  config.ubication.longitude });
+       
+          }
+          const seeker = new Seeker(client)
      
         seeker.run()
         const profile = await client.getProfile();
@@ -34,9 +44,9 @@ async function init() {
          
     } catch(err){
         console.log(err)
-        setInterval(() => {
+        setTimeout(() => {
             init()
-        }, 60*1000*10);
+        }, 60*1000*120);
     }
    
 }
@@ -53,7 +63,7 @@ async function releaseLovers(client, profile) {
     try {
     
    
-   
+   if (!sleep) {
     const updates = await client.getUpdates();
     if (updates.matches && updates.matches.length) {
         console.log('releaseLovers', new Date())
@@ -70,6 +80,8 @@ async function releaseLovers(client, profile) {
           return lover
         })
      }
+   }
+   
      if (relaseLoverInterval) {
         setTimeout(()=> {
             releaseLovers(client,profile)

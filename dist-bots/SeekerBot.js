@@ -153,7 +153,7 @@ var Seeker = /*#__PURE__*/function () {
     }());
 
     this.client = client;
-    this.nextTry = 60 * 1000 * 60 * 3;
+    this.nextTry = 60 * 1000 * 60 * 1;
   }
 
   _createClass(Seeker, [{

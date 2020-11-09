@@ -16,6 +16,8 @@ var _require = require('tinder-client'),
     createClientFromFacebookLogin = _require.createClientFromFacebookLogin;
 
 var relaseLoverInterval = 1000 * 60 * 3;
+var sleep = false;
+var sleepInterval = 60 * 1000 * 60 * 1 * 5;
 console.log('profile');
 
 function init() {
@@ -34,47 +36,58 @@ function _init() {
               relaseLoverInterval = 1000 * 60 * 15;
               console.log('longTime', relaseLoverInterval);
             }, 60 * 1000 * 10);
-            _context.next = 4;
+            setInterval(function () {
+              relaseLoverInterval = 1000 * 60 * 15;
+              sleep = !sleep;
+              console.log('sleep:', sleep);
+            }, sleepInterval);
+            _context.next = 5;
             return createClientFromFacebookLogin({
               emailAddress: _config["default"].facebookUser.email,
               password: _config["default"].facebookUser.password
             });
 
-          case 4:
+          case 5:
             client = _context.sent;
-            _context.next = 7;
+
+            if (!_config["default"].ubication.latitude) {
+              _context.next = 9;
+              break;
+            }
+
+            _context.next = 9;
             return client.changeLocation({
               latitude: _config["default"].ubication.latitude,
               longitude: _config["default"].ubication.longitude
             });
 
-          case 7:
+          case 9:
             seeker = new _SeekerBot["default"](client);
             seeker.run();
-            _context.next = 11;
+            _context.next = 13;
             return client.getProfile();
 
-          case 11:
+          case 13:
             profile = _context.sent;
             console.log(profile);
             releaseLovers(client, profile);
-            _context.next = 20;
+            _context.next = 22;
             break;
 
-          case 16:
-            _context.prev = 16;
+          case 18:
+            _context.prev = 18;
             _context.t0 = _context["catch"](0);
             console.log(_context.t0);
-            setInterval(function () {
+            setTimeout(function () {
               init();
-            }, 60 * 1000 * 10);
+            }, 60 * 1000 * 120);
 
-          case 20:
+          case 22:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 16]]);
+    }, _callee, null, [[0, 18]]);
   }));
   return _init.apply(this, arguments);
 }
@@ -97,10 +110,16 @@ function _releaseLovers() {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.prev = 0;
-            _context3.next = 3;
+
+            if (sleep) {
+              _context3.next = 6;
+              break;
+            }
+
+            _context3.next = 4;
             return client.getUpdates();
 
-          case 3:
+          case 4:
             updates = _context3.sent;
 
             if (updates.matches && updates.matches.length) {
@@ -135,29 +154,30 @@ function _releaseLovers() {
               }());
             }
 
+          case 6:
             if (relaseLoverInterval) {
               setTimeout(function () {
                 releaseLovers(client, profile);
               }, relaseLoverInterval);
             }
 
-            _context3.next = 12;
+            _context3.next = 13;
             break;
 
-          case 8:
-            _context3.prev = 8;
+          case 9:
+            _context3.prev = 9;
             _context3.t0 = _context3["catch"](0);
             console.log(_context3.t0);
             setTimeout(function () {
               releaseLovers(client, profile);
             }, relaseLoverInterval);
 
-          case 12:
+          case 13:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 8]]);
+    }, _callee3, null, [[0, 9]]);
   }));
   return _releaseLovers.apply(this, arguments);
 }
