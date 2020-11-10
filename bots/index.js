@@ -8,7 +8,7 @@ import Lover from './LoverBot'
 let relaseLoverInterval= 1000*60*3
 let sleep = false
 const sleepInterval=60*1000*60*1*5
-console.log('profile')
+
 let profileLog
 let LastMessage='none'
 async function init() {
@@ -40,7 +40,7 @@ async function init() {
         const profile = await client.getProfile();
         profileLog=profile
         console.log(profile)
-        releaseLovers(client, profile && profile.name)  
+        releaseLovers(client, profile)  
         
          
     } catch(err){
@@ -83,6 +83,7 @@ async function releaseLovers(client, profile) {
     
    
    if (!sleep) {
+       console.log('sleep'+sleep)
     const updates = await client.getUpdates();
     if (updates.matches && updates.matches.length) {
         console.log('releaseLovers', new Date())

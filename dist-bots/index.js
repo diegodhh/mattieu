@@ -18,7 +18,6 @@ var _require = require('tinder-client'),
 var relaseLoverInterval = 1000 * 60 * 3;
 var sleep = false;
 var sleepInterval = 60 * 1000 * 60 * 1 * 5;
-console.log('profile');
 var profileLog;
 var LastMessage = 'none';
 
@@ -74,7 +73,7 @@ function _init() {
             profile = _context.sent;
             profileLog = profile;
             console.log(profile);
-            releaseLovers(client, profile && profile.name);
+            releaseLovers(client, profile);
             _context.next = 23;
             break;
 
@@ -131,14 +130,15 @@ function _releaseLovers() {
             _context3.prev = 0;
 
             if (sleep) {
-              _context3.next = 6;
+              _context3.next = 7;
               break;
             }
 
-            _context3.next = 4;
+            console.log('sleep' + sleep);
+            _context3.next = 5;
             return client.getUpdates();
 
-          case 4:
+          case 5:
             updates = _context3.sent;
 
             if (updates.matches && updates.matches.length) {
@@ -174,30 +174,30 @@ function _releaseLovers() {
               }());
             }
 
-          case 6:
+          case 7:
             if (relaseLoverInterval) {
               setTimeout(function () {
                 releaseLovers(client, profile);
               }, relaseLoverInterval);
             }
 
-            _context3.next = 13;
+            _context3.next = 14;
             break;
 
-          case 9:
-            _context3.prev = 9;
+          case 10:
+            _context3.prev = 10;
             _context3.t0 = _context3["catch"](0);
             console.log(_context3.t0);
             setTimeout(function () {
               releaseLovers(client, profile);
             }, relaseLoverInterval);
 
-          case 13:
+          case 14:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[0, 9]]);
+    }, _callee3, null, [[0, 10]]);
   }));
   return _releaseLovers.apply(this, arguments);
 }

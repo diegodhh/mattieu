@@ -37,23 +37,27 @@ class Lover {
             const allSteps=Object.keys(conversationalTemplates)
             // console.log('currentStep', currentStep)
             // console.log('index calcul',allSteps.indexOf(currentStep))
+          
             const nextStep=allSteps[allSteps.indexOf(currentStep)+1]
             // console.log('nextStep', nextStep)
             // console.log('ready', this._checkIfReady(messages, createdDate))
             if (!nextStep || !this._checkIfReady(messages, createdDate)) {
                 // console.log('notReady or done')
+           
                 return false
             }
              
                 // console.log('ready')
                 const templates = conversationalTemplates[nextStep]
                 if (!templates) {
+                  
                     return false
                 }
                 const randomIndex = randomInt(0,templates.length)
                 setTimeout(async ()=> {
                     try {
                         this._sendMessage(templates[randomIndex] || templates[randomIndex-1] || 'error 404 de roboto pelotudo')
+                        
                     } catch(err) {
                         console.log('sendmessage error', err)
                     }
@@ -78,7 +82,7 @@ class Lover {
         }
        
         const lastMessages= messages[0]
-
+      
 
         // console.log('lastMessage', lastMessages)
         // console.log('profileid', this.profile._id)
